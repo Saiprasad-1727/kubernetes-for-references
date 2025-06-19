@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  namespace: nginx
+spec:
+    containers:
+
+    - name: nginx
+      image: nginx:latest
+      ports:
+      - containerPort: 80
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+
+
+# kubectl apply -f pod.yml
+# kubectl get pods -n nginx
+# kubectl get pods -n nginx -o wide
+# imp -- kubectl describe pod nginx-pod -n nginx
+# kubectl logs nginx-pod -n nginx
+# kubectl delete pod nginx-pod -n nginx
+# imp -- kubectl exec -it nginx-pod -n nginx -- /bin/bash
+
