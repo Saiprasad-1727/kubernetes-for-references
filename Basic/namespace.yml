@@ -1,0 +1,25 @@
+--- 
+apiVersion: v1
+kind: Namespace   
+metadata:
+  name: nginx
+...
+
+#kubectl apply -f namespace.yml
+
+#kubectl create namespace nginx or with above yaml file both are same
+#kubectl get namespaces
+#kubectl get ns 
+#kubectl get ns nginx -o yaml
+#kubectl get ns nginx -o json
+#kubectl describe ns nginx
+#kubectl delete ns nginx
+#kubectl delete namespace nginx
+#kubectl get all --all-namespaces 
+#kubectl get all -n nginx
+#kubectl get pods -n nginx
+#kubectl get pods -n nginx -o wide
+#kubectl get pods -n nginx -o wide --show-labels
+#kubectl get pods -n nginx -o wide --show-labels | grep nginx
+#kubectl get pods -n nginx -o wide --show-labels | grep nginx | awk '{print $1}'
+#kubectl get pods -n nginx -o wide --show-labels | grep nginx | awk '{print $1}' | xargs kubectl delete pod -n nginx
