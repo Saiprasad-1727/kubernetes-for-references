@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet 
+metadata:
+  name: mysql-statefulset   
+  # This is the name of the StatefulSet.
+  # This is the name of the StatefulSet that will manage the pods.
+  namespace: sai-ns
+  labels:
+    app: mysql  
+    # This label is used to identify the pods managed by this StatefulSet.
+    # This label is used to identify the StatefulSet.
+spec:
+  serviceName: mysql-service
+  # This is the name of the service that will be used to manage the pods. 
+  # This is the name of the headless service that will be used to manage the pods.
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpassword 
+        - name: MYSQL_DATABASE
+          value: notesdb
+        volumeMounts:
+          - mountPath: /var/www/html
+            name: my-volume
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"   
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+            claimName: local-pvc
+          
