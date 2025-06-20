@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  clusterIP: None
+  # This is a headless service, which means it does not have a cluster IP.
+  selector:
+    app: mysql
+  # This selector should match the labels of the pods in the StatefulSet.
+  ports:
+  - name: mysql-port
+    protocol: TCP
+    # The protocol used by the service.-
+    port: 3306
+    targetPort: 3306
+    # The port on which the service is exposed.
