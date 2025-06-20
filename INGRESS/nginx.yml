@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+...
+
+# # Kubectl apply -f nginx.yml
+# ## This command will create the Deployment and Service for Nginx in the Kubernetes cluster. 
+
+
+#kubectl get deployment nginx-deployment
+# kubectl get service nginx-service
+# Kubectl get pods -l app=nginx
+# ## These commands will show the status of the Deployment, Service, and Pods created for N
+#kubectl describe deployment nginx-deployment
+# ## the Nginx application.
