@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apache-nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: "tws.com"
+    http:
+      paths:
+      - path: /apache
+        pathType: Prefix
+        backend:
+          service:
+            name: apache-service
+            port:
+              number: 80
+      - path: /nginx
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+
+
+
+
+## This Ingress resource routes traffic to two different services based on the path:
+## - Requests to /apache are routed to the apache-service on port 80. 
+## - Requests to /nginx are routed to the nginx-service on port 80.
+## The host "tws.com" is specified, so this Ingress will only respond to requests made to that host.
+## The annotation nginx.ingress.kubernetes.io/rewrite-target: / ensures that the path is
+
+# kubectl apply -f ingress.yml
+## rewritten to the root path when forwarding requests to the backend services.
+
+#kubectl get ingress
+## This command will show the status of the Ingress resource, including the address it is exposed
+
+## kubectl describe ingress apache-nginx-ingress
+## on and any rules defined.
