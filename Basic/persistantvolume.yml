@@ -1,0 +1,30 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: local-pv  
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: /mnt/data
+
+
+
+    # # kubectl apply -f persistantvolume.yml -n sai-ns
+    # # kubectl get pv -n sai-ns
+    # # kubectl describe pv local-pv -n sai-ns
+    # # kubectl get pv  
+    # # kubectl get pv -o wide
+    # # kubectl get pv -o wide -n sai-ns
+# # kubectl get pv -n sai-ns -o yaml
+    # # kubectl get pv -o wide
+    # # kubectl get pv -n sai-ns  
+
+# root@ip-172-31-86-178:~# kubectl get pv -n sai-ns
+#   NAME       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS    VOLUMEATTRIBUTESCLASS   REASON   AGE
+#   local-pv   1Gi        RWO            Retain           Available           local-storage   <unset>                          3m47s
+#   root@ip-172-31-86-178:~#
