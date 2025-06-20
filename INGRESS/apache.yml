@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+    spec:
+      containers:
+      - name: apache
+        image: httpd:2.4
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-service
+spec:
+  selector:
+    app: apache
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+...
+
+# # Kubectl apply -f apache.yml
+# ## This command will create the Deployment and Service for Apache in the Kubernetes cluster.  
+## kubectl get deployment apache-deployment
+# kubectl get service apache-service
+# ## These commands will show the status of the Deployment and Service created for the Apache application.
+
+# kubectl get pods -l app=apache
+# ## This command will list the Pods created for the Apache application, filtered by the label app
+
+# kubectl describe deployment apache-deployment
+# ## This command will provide detailed information about the Apache Deployment, including its status, replicas,
+
