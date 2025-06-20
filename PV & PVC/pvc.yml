@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storage
+
+  # # kubectl apply -f persistantvolumeclaim.yml -n sai-ns
+  # # kubectl get pv -n sai-ns 
+
+##    root@ip-172-31-86-178:~# kubectl get pv -n sai-ns
+##    NAME       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS    VOLUMEATTRIBUTESCLASS   REASON   AGE
+##    local-pv   1Gi        RWO            Retain           Bound    sai-ns/local-pvc   local-storage   <unset>                          13m
+##    root@ip-172-31-86-178:~# kubectl get pvc -n sai-ns
+##    NAME        STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS    VOLUMEATTRIBUTESCLASS   AGE
+##    local-pvc   Bound    local-pv   1Gi        RWO            local-storage   <unset>                 66s
+##    oot@ip-172-31-86-178:~#
+
+
+# # # kubectl get pvc -n sai-ns
+# # # kubectl get pvc -n sai-ns -o wide 

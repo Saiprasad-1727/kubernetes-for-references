@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: sai-ns
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /var/www/html
+            name: my-volume
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"   
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+            claimName: local-pvc
+...
+
+## To apply the deployment:
+# # kubectl apply -f deployment.yml
+# # kubectl get deployments -n sai-ns     
+# # kubectl get deploy -n sai-ns
+# # kubectl describe deployment nginx-deployment -n sai-ns
+# # kubectl get pods -n sai-ns
+# # kubectl get pods -n sai-ns -o wide  
