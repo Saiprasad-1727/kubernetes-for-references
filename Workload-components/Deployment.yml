@@ -1,0 +1,75 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment  
+metadata:
+  name: nginx-deployment
+  namespace: sai-ns
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+        containers:
+        - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service     
+metadata:
+  name: nginx-service
+  namespace: sai-ns   
+spec:
+  selector: 
+    app: nginx
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080
+...
+
+# ## To create the namespace sai-ns:
+# ## kubectl create namespace sai-ns
+
+
+
+
+# Compare this snippet from replicasets.yml:
+
+# # kubectl apply -f deployment.yml
+# # kubectl get deployments -n sai-ns 
+# # kubectl get deploy -n sai-ns
+# # kubectl describe deployment nginx-deployment -n sai-ns  
+# # kubectl get pods -n sai-ns
+# # kubectl get pods -n sai-ns -o wide  
+
+## To scale the deployment:
+# # kubectl scale deployment/nginx-deployment --replicas=5 -n sai-ns
+
+## Kubectl rollout commands:
+# # kubectl rollout status deployment/nginx-deployment -n sai-ns  
+# # kubectl rollout history deployment/nginx-deployment -n sai-ns
+# # kubectl rollout undo deployment/nginx-deployment -n sai-ns  
+
+##Rolling update the image of the deployment:
+
+## Kubectl set image deployment/nginx-deployment nginx=nginx:1.19 -n sai-ns
+
