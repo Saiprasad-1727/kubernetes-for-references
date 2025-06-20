@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet  
+metadata:
+  name: nginx-replicasets
+  namespace: sai-ns
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: nginx-rep-pod
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+...
+
+
+# # kubectl apply -f replicasets.yml
+# # kubectl get replicasets -n sai-ns
+# # kubectl get rs -n sai-ns
+# # kubectl describe rs nginx-replicasets -n sai-ns   
+# # kubectl get pods -n sai-ns
+# # kubectl get pods -n sai-ns -o wide
+
+# ## To scale the replicaset:
+# # kubectl scale rs/nginx-replicasets --replicas=5 -n sai-ns

@@ -1,0 +1,32 @@
+## Daemonset in Kubernetes is a type of workload that ensures that a copy of a pod runs on each node in the cluster. 
+## This is useful for running background tasks or services that need to be available on every node, such as logging agents or monitoring tools.
+
+
+apiVersion: apps/v1
+kind: DaemonSet   
+metadata:
+  name: nginx-daemonset
+  namespace: sai-ns
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: nginx-daemonset-pod
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+
+## # kubectl apply -f daemonset.yml
+## # kubectl get daemonsets -n sai-ns 
+## # kubectl get ds -n sai-ns
+## # kubectl describe ds nginx-daemonset -n sai-ns
+## # kubectl get pods -n sai-ns 
+## # kubectl get pods -n sai-ns -o wide
+## # kubectl get pods -n sai-ns -o wide --show-labels
